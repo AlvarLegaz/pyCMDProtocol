@@ -2,26 +2,27 @@
 # tags: CMD, protocol, Pyserial
 
 import serial
+import ComChannel
 
 print("AppCMD for Python")
 
 ser = serial.Serial()
 
-ser.baudrate = 19200
-ser.port = 'COM4'
-ser.timeout = 0.1 #in seconds
+baudrate = 19200
+port = 'COM4'
+timeout = 0.1 #in seconds
 
-ser.open()
-print("Port Name:",ser.name)         
-print("IsOpen:",ser.is_open)        
+channel = ComChannel.ComChannel(port, baudrate, timeout)
+channel.open()
 
-msg = [0x01, 0x23, 0x11, 0xaa]
+print("Port Name:",channel.portName())         
+print("IsOpen:",channel.isOpen())        
+
+msg = [0x01, 0x23, 0x11, 0xaa, 0x00, 0x51]
 print("send:", ','.join('{:02X}'.format(x) for x in msg))
-ser.write(msg)
+channel.send(msg)
 
-received = ser.readline()
+received = channel.receive()
 print("received:", ','.join('{:02X}'.format(x) for x in received))
 
-ser.close()
-
-
+channel.close()
