@@ -1,12 +1,8 @@
 # Example script for Cmd protocol
 # tags: CMD, protocol, Pyserial
-
-import serial
 import ComChannel
 
 print("AppCMD for Python")
-
-ser = serial.Serial()
 
 baudrate = 19200
 port = 'COM4'
