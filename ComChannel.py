@@ -1,39 +1,33 @@
 import serial
 
-class CommChannel:
+class ComChannel:
+
     def __init__(self, port, baudrate, reveivedTiemout_sec):
+        self.ser = serial.Serial(port=port,baudrate=baudrate,timeout=reveivedTiemout_sec)
 
-        self.ser = serial.Serial()
-        self.ser.port = port
-        self.ser.baudrate = baudrate
-        self.ser.timeout = reveivedTiemout #in seconds
-
-    def connect():
-        self.ser.open()
+    def open(self):
         pass
+
+    def portName(self):
+        return self.ser.port
+
+    def isOpen(self):
+        return self.ser.is_open
 
     def set_timeout(self, timeout):
         # Establecer un tiempo de espera para operaciones de lectura o escritura
         pass
 
     def send(self, data):
-        # Enviar datos a través del canal
-        pass
+        return self.ser.write(data)
 
-    def receive(self, buffer_size):
-        # Recibir datos del canal
-        pass
-
-    def open(self):
-        # Abrir el canal (si es necesario)
-        pass
-
+    def receive(self):
+        return self.ser.readline()
+       
     def close(self):
-        # Cerrar el canal y liberar recursos
-        pass
+        self.ser.close
 
 # Ejemplo de uso
 if __name__ == "__main__":
-    channel = CommChannel("COM4",9600,0.1)
-    channel.connect()
+    channel = ComChannel("COM4",9600,0.1)
 
