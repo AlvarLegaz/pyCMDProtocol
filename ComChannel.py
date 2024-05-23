@@ -2,7 +2,8 @@ import serial
 
 class ComChannel:
 
-    def __init__(self, port, baudrate, reveivedTiemout_sec):
+    def __init__(self, port, baudrate, reveivedTiemout_sec, maxReceiveBuffer):
+        self.maxReceiveBuffer = maxReceiveBuffer
         self.ser = serial.Serial(port=port,baudrate=baudrate,timeout=reveivedTiemout_sec)
 
     def open(self):
@@ -22,12 +23,8 @@ class ComChannel:
         return self.ser.write(data)
 
     def receive(self):
-        return self.ser.readline()
+        return self.ser.read(self.maxReceiveBuffer)
        
     def close(self):
         self.ser.close
-
-# Ejemplo de uso
-if __name__ == "__main__":
-    channel = ComChannel("COM4",9600,0.1)
 

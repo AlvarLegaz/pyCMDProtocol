@@ -1,24 +1,23 @@
 # Example script for Cmd protocol
 # tags: CMD, protocol, Pyserial
-import ComChannel
+
+import SProtocol
 
 print("AppCMD for Python")
 
-baudrate = 19200
-port = 'COM4'
-timeout = 0.1 #in seconds
+sourceAddress = (0x01)
+destinationAddress = (0x01)
 
-channel = ComChannel.ComChannel(port, baudrate, timeout)
-channel.open()
+protocol = SProtocol.SProtocol("COM",sourceAddress)
+protocol.open()
 
-print("Port Name:",channel.portName())         
-print("IsOpen:",channel.isOpen())        
+print("Channel Name:", protocol.getChannelName())         
+print("IsOpen:",protocol.isOpen())        
 
-msg = [0x01, 0x23, 0x11, 0xaa, 0x00, 0x51]
-print("send:", ','.join('{:02X}'.format(x) for x in msg))
-channel.send(msg)
+msg = [0x01, 0x23, 0x11, 0x0a, 0x00, 0x51]
+protocol.send_clean(msg, destinationAddress)
 
-received = channel.receive()
+received = protocol.receive_clean()
 print("received:", ','.join('{:02X}'.format(x) for x in received))
 
-channel.close()
+protocol.close()
