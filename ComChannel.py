@@ -1,10 +1,11 @@
 import serial
 
+
 class ComChannel:
 
     def __init__(self, port, baudrate, reveivedTiemout_sec, maxReceiveBuffer):
         self.maxReceiveBuffer = maxReceiveBuffer
-        self.ser = serial.Serial(port=port,baudrate=baudrate,timeout=reveivedTiemout_sec)
+        self.ser = serial.Serial(port=port, baudrate=baudrate, timeout=reveivedTiemout_sec)
 
     def open(self):
         pass
@@ -24,7 +25,6 @@ class ComChannel:
 
     def receive(self):
         return self.ser.read(self.maxReceiveBuffer)
-       
+
     def close(self):
         self.ser.close
-
